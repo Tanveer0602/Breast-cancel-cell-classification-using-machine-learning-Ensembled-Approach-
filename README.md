@@ -1,0 +1,2 @@
+# Breast-cancel-cell-classification-using-machine-learning-Ensembled-Approach-
+Developed an ensemble-based machine learning model for breast cancer classification using statistical feature selection and multiple classifiers. The system accurately predicts malignant and benign tumors, reduces model bias, improves generalization, and supports reliable medical decision-making through robust evaluation metrics.
