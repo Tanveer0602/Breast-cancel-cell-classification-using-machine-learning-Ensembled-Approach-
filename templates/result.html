@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Prediction Result</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Poppins", sans-serif;
+            background: linear-gradient(135deg, #063970, #0b7fa5, #a8e0ff);
+            color: #042235;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .box {
+            width: 90%;
+            max-width: 720px;
+            background: rgba(255, 255, 255, 0.12);
+            padding: 26px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
+        }
+
+        h1 {
+            color: white;
+            margin: 0 0 6px;
+        }
+
+        .final {
+            margin-top: 12px;
+            padding: 16px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 20px;
+            color: #fff;
+        }
+
+        .mal {
+            background: linear-gradient(90deg, #ff7676, #ff4f4f);
+        }
+
+        .ben {
+            background: linear-gradient(90deg, #8be78b, #2ecc71);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 12px;
+            border-radius: 8px;
+            color: #02293a;
+        }
+
+        .label {
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 6px;
+            color: #02293a;
+        }
+
+        .value {
+            font-size: 16px;
+        }
+
+        a.btn {
+            display: inline-block;
+            margin-top: 18px;
+            padding: 10px 14px;
+            background: #02293a;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+        }
+
+        @media (max-width:600px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <h1>Diagnosis Result</h1>
+
+        {% if error %}
+        <div class="final mal">{{ error }}</div>
+        <a class="btn" href="/">← Back</a>
+        {% else %}
+        <div class="final {% if final_pred.lower() == 'malignant' %}mal{% else %}ben{% endif %}">
+            Final: {{ final_pred }}
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <div class="label">Logistic Regression</div>
+                <div class="value">{{ individual_preds['lr'] }} {% if individual_probs['lr'] %} ({{ '%.2f' %
+                    (100*individual_probs['lr']) }}%) {% endif %}</div>
+            </div>
+
+            <div class="card">
+                <div class="label">Decision Tree</div>
+                <div class="value">{{ individual_preds['dt'] }} {% if individual_probs['dt'] %} ({{ '%.2f' %
+                    (100*individual_probs['dt']) }}%) {% endif %}</div>
+            </div>
+
+            <div class="card">
+                <div class="label">Random Forest</div>
+                <div class="value">{{ individual_preds['rf'] }} {% if individual_probs['rf'] %} ({{ '%.2f' %
+                    (100*individual_probs['rf']) }}%) {% endif %}</div>
+            </div>
+        </div>
+
+        <a class="btn" href="/">← New Prediction</a>
+        {% endif %}
+
+    </div>
+</body>
+
+</html>
